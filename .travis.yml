@@ -1,0 +1,26 @@
+language: python
+
+install:
+  - pip install -r requirements.txt
+
+python:
+  - 3.6
+
+services:
+  - postgresql
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=metasud.settings
+
+before_script:
+  - psql -c "CREATE USER root WITH PASSWORD 'pass@123';" -U postgres
+  - psql -c "ALTER USER root CREATEDB;" -U postgres
+  - psql -c "CREATE DATABASE metasud WITH OWNER root ENCODING 'UTF8';" -U postgres
+  - python3 manage.py makemigrations app
+  - python3 manage.py migrate
+
+env:
+  - DJANGO=2.2 DB=postgresql SECRET_KEY='%@)y*yi54p=qhxp46g998_s2x3z*2-rx6x$3z#_a=rm5k_6wgk' DEBUG='True' ENGINE='django.db.backends.postgresql_psycopg2' DB_NAME='metasud' DB_USER='root' DB_PASS='pass@123' DB_HOST='localhost' DB_PORT='5432'
+
+script:
+  - python3 manage.py test
