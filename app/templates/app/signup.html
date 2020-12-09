@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'app:signup' %}">
+        {% csrf_token %} 
+        <input type="email" name="email" id="">
+        <input type="text" name="username" id="">
+        <input type="password" name="password" id="">
+        <input type="submit" value="Sign Up">
+        <div>{{ error }}</div>
+    </form>
+</body>
+</html>
